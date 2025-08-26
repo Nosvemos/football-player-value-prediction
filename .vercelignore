@@ -1,0 +1,26 @@
+# Backend files - exclude from Vercel deployment
+backend/
+*.pkl
+model.pkl
+requirements.txt
+render.yaml
+start.sh
+
+# Python files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+venv/
+ENV/
+env/
+
+# Large files that could cause size limit issues
+*.zip
+*.tar.gz
+*.rar
+
+# Development files
+.git/
+.gitignore
+README.md
