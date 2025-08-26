@@ -2,24 +2,37 @@ import axios from 'axios';
 
 // Environment-aware API configuration
 const getApiBaseUrl = () => {
+  // Debug logging for environment detection
+  console.log('=== API URL DEBUG INFO ===');
+  console.log('Environment DEV mode:', import.meta.env.DEV);
+  console.log('VITE_API_URL from env:', import.meta.env.VITE_API_URL);
+  console.log('window.location.origin:', window.location.origin);
+  console.log('All environment variables:', import.meta.env);
+  
   // Check if we're in development
   if (import.meta.env.DEV) {
+    console.log('🔧 Using DEVELOPMENT URL: http://localhost:8000');
     return 'http://localhost:8000';
   }
   
   // In production, always prioritize environment variables
   const baseUrl = import.meta.env.VITE_API_URL;
   if (baseUrl) {
+    console.log('✅ Using VITE_API_URL:', baseUrl);
     return baseUrl;
   }
   
   // Fallback for deployments without environment variables
+  console.log('⚠️ Using FALLBACK URL:', window.location.origin);
   return window.location.origin;
 };
 
 // Create axios instance with base configuration
+const finalApiUrl = getApiBaseUrl();
+console.log('🎯 FINAL API BASE URL BEING USED:', finalApiUrl);
+
 const api = axios.create({
-  baseURL: getApiBaseUrl(),
+  baseURL: finalApiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,11 +42,14 @@ const api = axios.create({
 // Request interceptor for logging
 api.interceptors.request.use(
   (config) => {
-    console.log('Making API request:', config.method?.toUpperCase(), config.url);
+    const fullUrl = `${config.baseURL}${config.url}`;
+    console.log('🚀 Making API request:', config.method?.toUpperCase(), 'to FULL URL:', fullUrl);
+    console.log('Base URL:', config.baseURL);
+    console.log('Endpoint:', config.url);
     return config;
   },
   (error) => {
-    console.error('Request error:', error);
+    console.error('❌ Request error:', error);
     return Promise.reject(error);
   }
 );
