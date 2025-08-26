@@ -7,18 +7,13 @@ const getApiBaseUrl = () => {
     return 'http://localhost:8000';
   }
   
-  // In production, use environment variables or relative paths
+  // In production, always prioritize environment variables
   const baseUrl = import.meta.env.VITE_API_URL;
   if (baseUrl) {
     return baseUrl;
   }
   
-  // For Vercel deployment, use relative path to serverless functions
-  if (window.location.hostname.includes('vercel.app')) {
-    return `${window.location.origin}/api`;
-  }
-  
-  // For Railway or other deployments
+  // Fallback for deployments without environment variables
   return window.location.origin;
 };
 
