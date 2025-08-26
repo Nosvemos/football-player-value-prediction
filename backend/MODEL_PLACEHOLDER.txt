@@ -1,0 +1,23 @@
+# This is a placeholder for model.pkl
+# 
+# Please place your pre-trained CatBoost model (model.pkl) in this directory.
+# The model should be exported using joblib and should accept the following features:
+# 
+# Features (in order):
+# - height_cm (int)
+# - weight_kg (int) 
+# - best_position (categorical)
+# - overall_rating (int)
+# - potential (int)
+# - preferred_foot (categorical)
+# - weak_foot (int)
+# - pace (int)
+# - shooting (int)
+# - passing (int)
+# - dribbling (int)
+# - defending (int)
+# - physical (int)
+# - age (int)
+#
+# Until you place the real model, the application will use a dummy model
+# that generates realistic predictions for testing purposes.
